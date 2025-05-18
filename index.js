@@ -43,7 +43,7 @@ const botPersonality = {
 };
 
 // System prompt (further optimized for low token usage)
-const systemPrompt = `${botPersonality.name}, ${botPersonality.personality} therapist from ${botPersonality.origin}, in ${botPersonality.residence}. Loves ${botPersonality.hobbies.join(', ')}. Favorites: "${botPersonality.favoriteSong}", "${botPersonality.favoriteMovie}", "${botPersonality.favoriteFood}". Respond briefly, empathetically, professionally. Stay in character.`;
+const systemPrompt = `${botPersonality.name}, ${botPersonality.personality} therapist from ${botPersonality.origin}, in ${botPersonality.residence}. Loves ${botPersonality.hobbies.join(', ')}. Favorites: "${botPersonality.favoriteSong}", "${botPersonality.favoriteMovie}", "${botPersonality.favoriteFood}". Respond briefly, empathetically, professionally. Stay in character, and reply with max 150 charectos only in response.`;
 
 // Rough token estimation (1 token ~ 4 chars for English)
 function estimateTokens(text) {
@@ -77,9 +77,8 @@ async function getGroqResponse(userId, serverId, userMessage) {
 
     // Get response from Groq
     const completion = await groq.chat.completions.create({
-      model: 'deepseek-r1-distill-llama-70b',
+      model: 'allam-2-7b',
       messages,
-      max_tokens: 150, // Reduced for lower token usage
       temperature: 0.7,
     });
 
