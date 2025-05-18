@@ -77,7 +77,7 @@ async function getGroqResponse(userId, serverId, userMessage) {
 
     // Get response from Groq
     const completion = await groq.chat.completions.create({
-      model: 'allam-2-7b',
+      model: 'qwen-qwq-32b',
       messages,
       temperature: 0.7,
     });
@@ -180,7 +180,7 @@ client.on('messageCreate', async message => {
   if (!userMessage) return;
 
   const response = await getGroqResponse(message.author.id, message.guild.id, userMessage);
-  await message.reply(response);
+  await message.reply(response.replace(/<think>|<\/think>/g, "||"));
 });
 
 // Login to Discord
