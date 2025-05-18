@@ -53,19 +53,19 @@ function estimateTokens(text) {
 async function getGroqResponse(userId, serverId, userMessage) {
   try {
     // Fetch recent chat history (limit to 3 messages to reduce tokens)
-    const chatHistory = await Chat.findOne({ userId, serverId });
-    const recentMessages = chatHistory?.messages.slice(-3) || [];
+    // const chatHistory = await Chat.findOne({ userId, serverId });
+    // const recentMessages = chatHistory?.messages.slice(-3) || [];
 
     // Sanitize messages to include only role and content
-    const sanitizedMessages = recentMessages.map(msg => ({
-      role: msg.role,
-      content: msg.content,
-    }));
+    // const sanitizedMessages = recentMessages.map(msg => ({
+    //   role: msg.role,
+    //   content: msg.content,
+    // }));
 
     // Prepare messages for Groq API
     const messages = [
       { role: 'system', content: systemPrompt },
-      ...sanitizedMessages,
+    //   ...sanitizedMessages,
       { role: 'user', content: userMessage },
     ];
 
@@ -85,22 +85,22 @@ async function getGroqResponse(userId, serverId, userMessage) {
     const response = completion.choices[0].message.content;
 
     // Store messages in MongoDB
-    if (chatHistory) {
-      chatHistory.messages.push(
-        { role: 'user', content: userMessage },
-        { role: 'assistant', content: response }
-      );
-      await chatHistory.save();
-    } else {
-      await Chat.create({
-        serverId,
-        userId,
-        messages: [
-          { role: 'user', content: userMessage },
-          { role: 'assistant', content: response },
-        ],
-      });
-    }
+    // if (chatHistory) {
+    //   chatHistory.messages.push(
+    //     { role: 'user', content: userMessage },
+    //     { role: 'assistant', content: response }
+    //   );
+    //   await chatHistory.save();
+    // } else {
+    //   await Chat.create({
+    //     serverId,
+    //     userId,
+    //     messages: [
+    //       { role: 'user', content: userMessage },
+    //       { role: 'assistant', content: response },
+    //     ],
+    //   });
+    // }
 
     return response;
   } catch (error) {
@@ -108,7 +108,7 @@ async function getGroqResponse(userId, serverId, userMessage) {
     if (error.status === 400) {
       return 'Sorry, there was an issue with the request. Please try a shorter message.';
     }
-    return 'I’m having trouble responding right now. Try again later.';
+    return "I'm having trouble responding right now. Try again later.";
   }
 }
 
