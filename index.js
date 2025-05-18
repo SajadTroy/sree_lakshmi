@@ -180,7 +180,7 @@ client.on('messageCreate', async message => {
   if (!userMessage) return;
 
   const response = await getGroqResponse(message.author.id, message.guild.id, userMessage);
-  await message.reply(response.replace(/<think>|<\/think>/g, "||"));
+  await message.reply(response.replace(/<think>.*?<\/think>/gs, ''));
 });
 
 // Login to Discord
