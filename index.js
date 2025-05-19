@@ -169,7 +169,7 @@ client.once('ready', async () => {
 
 // Handle messages (respond only if mentioned or replied to)
 client.on('messageCreate', async message => {
-  if (message.author.bot) return;
+  // if (message.author.bot) return;
 
   const isMentioned = message.mentions.has(client.user);
   const isReplyToBot = message.reference && (await message.channel.messages.fetch(message.reference.messageId)).author.id === client.user.id;
