@@ -1,5 +1,5 @@
 require('dotenv').config();
-const { Client, GatewayIntentBits, SlashCommandBuilder, REST, Routes } = require('discord.js');
+const { Client, GatewayIntentBits, SlashCommandBuilder, REST, Routes, ActivityType } = require('discord.js');
 const mongoose = require('mongoose');
 const Groq = require('groq-sdk');
 
@@ -146,6 +146,10 @@ client.once('ready', async () => {
     useUnifiedTopology: true,
   });
   console.log('Connected to MongoDB');
+  client.user.setPresence({
+      activities: [{ name: 'Tera Sang Yara', type: ActivityType.Listening, url: 'https://twitch.tv/monstercat' }], // Streaming activity with a Twitch URL
+      status: 'online' // Set bot status to online
+    });
 });
 
 // Handle slash commands
