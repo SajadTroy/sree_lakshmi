@@ -149,19 +149,19 @@ client.once('ready', async () => {
 });
 
 // Handle slash commands
-client.on('interactionCreate', async interaction => {
-  if (!interaction.isCommand()) return;
+// client.on('interactionCreate', async interaction => {
+//   if (!interaction.isCommand()) return;
 
-  const { commandName, options, user, guildId } = interaction;
+//   const { commandName, options, user, guildId } = interaction;
 
-  if (commandName === 'chat') {
-    await interaction.deferReply();
-    const message = options.getString('message');
-    await message.channel.sendTyping();
-    const response = await getGroqResponse(user.id, guildId, message);
-    await interaction.editReply(response);
-  }
-});
+//   if (commandName === 'chat') {
+//     await interaction.deferReply();
+//     const message = options.getString('message');
+//     await message.channel.sendTyping();
+//     const response = await getGroqResponse(user.id, guildId, message);
+//     await interaction.editReply(response);
+//   }
+// });
 
 // Handle messages (respond only if mentioned or replied to)
 client.on('messageCreate', async message => {
@@ -179,6 +179,8 @@ client.on('messageCreate', async message => {
   }
 
   if (!userMessage) return;
+
+  await message.channel.sendTyping();
 
   const response = await getGroqResponse(message.author.id, message.guild.id, userMessage);
   await message.reply(response.replace(/<think>.*?<\/think>/gs, ''));
