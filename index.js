@@ -150,7 +150,7 @@ client.once('ready', async () => {
 
 // Handle slash commands
 // client.on('interactionCreate', async interaction => {
-//   if (!interaction.isCommand()) return;
+  if (!interaction.isCommand()) return;
 
 //   const { commandName, options, user, guildId } = interaction;
 
