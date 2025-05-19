@@ -157,6 +157,7 @@ client.on('interactionCreate', async interaction => {
   if (commandName === 'chat') {
     await interaction.deferReply();
     const message = options.getString('message');
+    await message.channel.sendTyping();
     const response = await getGroqResponse(user.id, guildId, message);
     await interaction.editReply(response);
   }
